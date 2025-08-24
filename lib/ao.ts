@@ -33,14 +33,14 @@ const mockAOStorage: {
   messages: [],
   analytics: {
     totalTesters: 1247,
-    totalDApps: 23,
+    totalPlatforms: 23,
     totalConnections: 3891,
     retentionRate: 68.5,
-    dappConnections: [
-      { name: "DeFi Swap", connections: 892 },
-      { name: "NFT Marketplace", connections: 743 },
-      { name: "Gaming Platform", connections: 621 },
-      { name: "Social DApp", connections: 445 },
+    platformConnections: [
+      { name: "Social Feed", connections: 892 },
+      { name: "Community Forum", connections: 743 },
+      { name: "Messaging Platform", connections: 621 },
+      { name: "Social Connect", connections: 445 },
     ],
   },
 }
@@ -99,7 +99,7 @@ async function mockDryrun(params: {
   if (actionTag?.value === "GetAnalytics") {
     // Update analytics with recent activity
     const recentConnections = mockAOStorage.messages.filter((msg) =>
-      msg.tags.some((tag) => tag.name === "ActionType" && tag.value === "CONNECT_DAPP"),
+      msg.tags.some((tag) => tag.name === "ActionType" && tag.value === "CONNECT_PLATFORM"),
     ).length
 
     const updatedAnalytics = {
@@ -233,37 +233,36 @@ export async function initializeAOMonitoring(processId: string = AO_PROCESS_ID) 
   }
 }
 
-export async function registerDApp(
-  wallet: string,
-  dappData: {
+export async function registerPlatform(
+  owner: string,
+  platformData: {
     name: string
+    category: string
     description: string
     budget: string
-    category: string
   },
 ): Promise<string | null> {
   try {
-    console.log("[v0] Registering DApp in AO:", dappData)
+    console.log("[v0] Registering Platform in AO:", platformData)
 
     const messageId = await mockMessage({
       process: AO_PROCESS_ID,
       tags: [
-        { name: "Action", value: "RegisterDApp" },
-        { name: "Wallet", value: wallet },
-        { name: "DAppName", value: dappData.name },
-        { name: "Category", value: dappData.category },
+        { name: "Action", value: "RegisterPlatform" },
+        { name: "Owner", value: owner },
+        { name: "PlatformName", value: platformData.name },
+        { name: "Category", value: platformData.category },
       ],
       data: JSON.stringify({
-        ...dappData,
-        wallet,
         timestamp: Date.now(),
+        ...platformData,
       }),
     })
 
-    console.log("[v0] DApp registration message sent:", messageId)
+    console.log("[v0] Platform registration message sent:", messageId)
     return messageId
   } catch (error) {
-    console.error("[v0] Failed to register DApp in AO:", error)
+    console.error("[v0] Failed to register Platform in AO:", error)
     return null
   }
 }

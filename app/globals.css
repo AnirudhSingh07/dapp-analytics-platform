@@ -123,3 +123,23 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-rainbow {
+  animation: rainbow 3s linear infinite;
+}
+
+.before\:animate-rainbow::before {
+  animation: rainbow 3s linear infinite;
+}

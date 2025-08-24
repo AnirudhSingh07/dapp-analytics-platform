@@ -52,7 +52,7 @@ export function WalletConnect() {
     
         <Button
           onClick={connectWallet}
-          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+          className="w-50 bg-primary hover:bg-primary/90 text-primary-foreground"
         >
           Connect Arweave Wallet
         </Button>

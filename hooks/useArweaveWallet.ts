@@ -11,7 +11,7 @@ export function useArweaveWallet() {
       }
 
       await window.arweaveWallet.connect(["ACCESS_ADDRESS"], {
-        name: "My Next.js DApp",
+        name: "Socia Analytics",
       });
 
       const activeAddr = await window.arweaveWallet.getActiveAddress();
